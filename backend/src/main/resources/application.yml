@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: devcollab-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${DB_NAME:devcollab}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:admin123}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 25MB
+
+server:
+  port: 8080
+
+jwt:
+  secret: ${JWT_SECRET:change-this-in-.env-never-commit-a-real-secret-here}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
+storage:
+  # Local disk storage for development. Swap for an S3Client-backed implementation
+  # of StorageService (Feature 12 architecture) behind the same interface for
+  # production - nothing above the storage layer needs to change.
+  local-path: ${STORAGE_LOCAL_PATH:./uploads}
+  max-file-size-bytes: ${STORAGE_MAX_FILE_SIZE_BYTES:26214400}   # 25 MB
+
+logging:
+  level:
+    com.devcollab: DEBUG
